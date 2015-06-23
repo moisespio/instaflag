@@ -3,8 +3,48 @@
 @import 'helpers/variables';
 @import 'helpers/mixins';
 
+@include font-face('KG Chasing Cars', 'kgchasingcars-webfont', 'KG Chasing Cars', 'cursive');
+
 @import 'base/reset';
 @import 'base/page';
+
+@import 'owl-carousel';
+
+#photos {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+}
+
+.user {
+	position: absolute;
+	bottom: 50px;
+	width: 100%;
+	text-align: center;
+	display: block;
+	font-size: 100px;
+	z-index: 2;
+}
+
+.single {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.owl-stage-outer {
+	height: 100%;
+	width: 100%;
+	.owl-stage {
+		height: 100%;
+		.owl-item {
+			height: 100%;
+		}
+	}
+}
 
 // @import 'components/form';
 

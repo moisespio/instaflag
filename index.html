@@ -13,7 +13,8 @@
     <body ng-controller="mainController">
 
         <div id="photos" class="owl-carousel">
-            <div class="single" ng-repeat="photo in photos" style="background-image: url({{ photo.images.standard_resolution.url }})">
+            <div class="single" ng-repeat="photo in photos">
+                <div class="photo" style="background-image: url({{ photo.images.standard_resolution.url }})"></div>
                 <span class="user">{{ photo.user.username }}</span>
             </div>
         </div>

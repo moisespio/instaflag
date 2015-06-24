@@ -1,7 +1,16 @@
-app.controller('mainController', function($sce, $rootScope, $scope, $http, $document, $timeout) {
-	$scope.photos = new Array()
+app.controller('mainController', function($rootScope, $scope, pollingService) {
+	$scope.photos = [];
 
-	function complete (response) {
+    pollingService.then(
+        function () {},
+        function () {},
+        function (data) {
+            console.log('notify');
+            console.log(data);
+        }
+    );
+
+	/*function complete (response) {
 		$scope.photos = response.data;
 
 		$timeout(function () {
@@ -14,5 +23,5 @@ app.controller('mainController', function($sce, $rootScope, $scope, $http, $docu
 		});
 	}
 
-	$http.get('api.php').success(complete);
+	$http.get('api.php').success(complete);*/
 });

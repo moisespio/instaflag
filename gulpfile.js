@@ -39,7 +39,11 @@ gulp.task('vendor', function() {
 });
 
 gulp.task('scripts', function() {
-    return gulp.src([source + 'scripts/*.js', source + 'scripts/controllers/*.js'])
+    return gulp.src([
+            source + 'scripts/*.js',
+            source + 'scripts/services/*.js',
+            source + 'scripts/controllers/*.js'
+        ])
         .pipe(concat('all.js'))
         .pipe(gulp.dest(compiled + 'scripts'))
         .pipe(livereload());

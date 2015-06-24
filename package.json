@@ -1,0 +1,25 @@
+{
+  "name": "goya-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate para inicialização de projetos.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:goyabpd/goya-boilerplate.git"
+  },
+  "author": "Goya BPD",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.2.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-csso": "^1.0.0",
+    "gulp-livereload": "^3.8.0",
+    "gulp-ruby-sass": "^1.0.5",
+    "gulp-uglify": "^1.2.0",
+    "gulp-uncss": "^1.0.1"
+  }
+}

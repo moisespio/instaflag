@@ -8,10 +8,9 @@ app.factory('pollingService', function ($http, $timeout, $q) {
             .get('api.php')
             .success(function (response) {
                 deferred.notify(response.data);
-                $timeout(poll, 1000);
+                $timeout(poll, 5000);
             });
     })();
 
     return deferred.promise;
-
 });

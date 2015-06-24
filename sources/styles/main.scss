@@ -46,6 +46,14 @@
 	width: 135px;
 }
 
+.escala {
+	position: absolute;
+	left: 30px;
+	bottom: 150px;
+	z-index: 200;
+	// width: 135px;
+}
+
 .user {
 	position: absolute;
 	bottom: 0;

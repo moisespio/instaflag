@@ -69,7 +69,12 @@ app.controller('mainController', function($rootScope, $scope, $timeout, pollingS
         function () {},
         function () {},
         function (response) {
-            console.log(response);
+            console.log("response.pollStatus:", response.pollStatus)
+            if (!firstRequest) {
+                if (response.pollStatus != 'start') {
+                    owl.trigger('next.owl.carousel');
+                }
+            }
             if (!angular.equals($scope.photos, response)) {
                 if (firstRequest) {
                     firstRequest = false;
@@ -79,7 +84,7 @@ app.controller('mainController', function($rootScope, $scope, $timeout, pollingS
                         owl.owlCarousel({
                             loop: true,
                             items: 1,
-                            autoplay: true,
+                            autoplay: false,
                             autoplayTimeout: 4000,
                             afterAction : function () {
                                 // console.log('after');

@@ -40,8 +40,8 @@
 
 .goya {
 	position: absolute;
-	right: 30px;
-	bottom: 150px;
+	right: 0px;
+	bottom: 120px;
 	z-index: 200;
 	width: 135px;
 	transform: scale(.6);
@@ -49,8 +49,8 @@
 
 .escala {
 	position: absolute;
-	left: 30px;
-	bottom: 150px;
+	left: -20px;
+	bottom: 130px;
 	z-index: 200;
 	transform: scale(.6);
 	// width: 135px;

@@ -49,6 +49,7 @@ app.controller('mainController', function($rootScope, $scope, $timeout, pollingS
         function () {},
         function () {},
         function (response) {
+            console.log(response);
             if (!angular.equals($scope.photos, response)) {
                 if (firstRequest) {
                     firstRequest = false;

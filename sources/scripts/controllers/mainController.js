@@ -7,6 +7,7 @@ app.controller('mainController', function($rootScope, $scope, $timeout, pollingS
         template = '<div class="owl-item"><div class="single"><div class="photo" style="background-image: url({ photo })"></div><span class="user">{ username }</span></div></div>',
         currentPhotos = [],
         newPhotos = [],
+        updateOnNextSlide = false;
         imagesToRemove = 0;
 
     function difference(array1, array2) {
@@ -49,49 +50,65 @@ app.controller('mainController', function($rootScope, $scope, $timeout, pollingS
         function () {},
         function () {},
         function (response) {
-            console.log("response.pollStatus:", response.pollStatus)
             if (!firstRequest) {
                 if (response.pollStatus != 'start') {
                     owl.trigger('next.owl.carousel');
                 }
             }
             if (!angular.equals($scope.photos, response)) {
-                if (firstRequest) {
-                    firstRequest = false;
-                    $scope.photos = response;
+                if (response.pollStatus != 'start') {
+                    if (firstRequest) {
+                        firstRequest = false;
+                        $scope.photos = response;
 
-                    $timeout(function () {
-                        owl.owlCarousel({
-                            loop: true,
-                            items: 1,
-                            autoplay: false,
-                            autoplayTimeout: 4000,
-                            afterAction : function () {
-                                // console.log('after');
-                            }
+                        $timeout(function () {
+                            owl.owlCarousel({
+                                loop: true,
+                                items: 1,
+                                autoplay: false,
+                                autoplayTimeout: 4000,
+                                afterAction : function () {
+                                    // console.log('after');
+                                }
+                            });
+
+                            owl.on('change.owl.carousel', function(event) {
+                                // updateOnNextSlide = false;
+                            });
+
+                            owl.on('changed.owl.carousel', function(event) {
+                                currentPhoto = event.page.index;
+                                if (updateOnNextSlide) {
+                                    for (var i = 0; i < newPhotos.length; i++) {
+                                        owl
+                                            .trigger('add.owl.carousel', [$(template.replace('{ photo }', newPhotos[i].images.standard_resolution.url).replace('{ username }', newPhotos[i].user.username)), currentPhoto + 1])
+                                            .trigger('refresh.owl.carousel');
+                                    }
+                                }
+
+                                updateOnNextSlide = false;
+                            });
                         });
+                    } else {
+                        // console.log(currentPhotos, response);
+                        newPhotos = difference(response, currentPhotos);
 
-                        owl.on('changed.owl.carousel', function(event) {
-                            currentPhoto = event.page.index;
-                        });
-                    });
-                } else {
-                    // console.log(currentPhotos, response);
-                    newPhotos = difference(response, currentPhotos);
-
-                    for (var i = 0; i < newPhotos.length; i++) {
-                        owl
-                            .trigger('add.owl.carousel', [$(template.replace('{ photo }', newPhotos[i].images.standard_resolution.url).replace('{ username }', newPhotos[i].user.username)), currentPhoto + 1])
-                            .trigger('refresh.owl.carousel');
+                        if (newPhotos.length) {
+                            console.log('response', response);
+                            console.log('currentPhotos', currentPhotos);
+                            console.log('newPhotos', newPhotos);
+                            updateOnNextSlide = true;
+                        }
                     }
+
+                    imagesToRemove = (currentPhotos.length + newPhotos.length) > 20 ? 20 - (currentPhotos.length + newPhotos.length) : 0;
+                    removeItems();
+
+
+                    currentPhotos = response;
+
+                    // console.log(getIds(currentPhotos));
                 }
-
-                imagesToRemove = (currentPhotos.length + newPhotos.length) > 20 ? 20 - (currentPhotos.length + newPhotos.length) : 0;
-                removeItems();
-
-                currentPhotos = response;
-
-                console.log(getIds(currentPhotos));
             }
         }
     );

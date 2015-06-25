@@ -4,7 +4,7 @@ app.controller('mainController', function($rootScope, $scope, $timeout, pollingS
     var firstRequest = true,
         owl = $('.owl-carousel'),
         currentPhoto = 0,
-        template = '<div class="owl-item"><div class="single"><div class="photo" style="background-image: url({ photo })"></div><span class="user">{ username }</span></div></div>',
+        template = '<div class="owl-item"><div class="single"><div class="photo" style="background-image: url({ photo })"></div><span class="user">@{ username }</span></div></div>',
         currentPhotos = [],
         newPhotos = [],
         updateOnNextSlide = false;
@@ -52,7 +52,11 @@ app.controller('mainController', function($rootScope, $scope, $timeout, pollingS
         function (response) {
             if (!firstRequest) {
                 if (response.pollStatus != 'start') {
-                    owl.trigger('next.owl.carousel');
+                    if (currentPhoto != currentPhotos.length - 1) {
+                        owl.trigger('next.owl.carousel');
+                    } else {
+                        owl.trigger('to.owl.carousel', [0, 500]);
+                    }
                 }
             }
             if (!angular.equals($scope.photos, response)) {
@@ -63,7 +67,7 @@ app.controller('mainController', function($rootScope, $scope, $timeout, pollingS
 
                         $timeout(function () {
                             owl.owlCarousel({
-                                loop: true,
+                                loop: false,
                                 items: 1,
                                 autoplay: false,
                                 autoplayTimeout: 4000,
